@@ -1,0 +1,58 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    FILE *fptr;
+    int math, english, kiswahili;
+    float average;
+    char buffer[100];
+
+    // Open file for writing
+    fptr = fopen("grades.txt", "w");
+    if (fptr == NULL) {
+        printf("Error opening file for writing!\n");
+        return 1;
+    }
+
+    // Input grades
+    printf("Enter math: ");
+    scanf("%d", &math);
+    printf("Enter english: ");
+    scanf("%d", &english);
+    printf("Enter kiswahili: ");
+    scanf("%d", &kiswahili);
+
+    // Calculate average
+    average = (math + english + kiswahili) / 3.0;
+
+    // Determine grade and write to file
+    if (average > 70) {
+        fprintf(fptr, "Grade: A\n");
+    } else if (average > 60) {
+        fprintf(fptr, "Grade: B\n");
+    } else if (average > 50) {
+        fprintf(fptr, "Grade: C\n");
+    } else {
+        fprintf(fptr, "Grade: D\n");
+    }
+
+    // Close the file after writing
+    fclose(fptr);
+
+    // Open file for reading
+    fptr = fopen("grades.txt", "r");
+    if (fptr == NULL) {
+        printf("Error opening file for reading!\n");
+        return 1;
+    }
+
+    // Read and print the grade from the file
+    while (fgets(buffer, 100, fptr) != NULL) {
+        printf("%s", buffer);
+    }
+
+    // Close the file after reading
+    fclose(fptr);
+
+    return 0;
+}
